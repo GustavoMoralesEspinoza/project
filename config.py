@@ -60,5 +60,4 @@ BESS_PLACEMENT    = "colocated"  # "colocated" = misma barra que PV / "free" = c
 EV_SIZES_KW       = [600, 1200, 2400]          # potencia máxima de estación [kW]
 EV_PROBS          = [0.35, 0.45, 0.20]         # probabilidades (deben sumar 1)
 EV_POWER_FACTOR   = 0.98
-EV_ELIGIBLE_BUSES = []  # barras candidatas para EV/CS — Marcos define esta lista
-                         # Ejemplo: ["bus5", "bus9", "bus14"]
+EV_ELIGIBLE_BUSES = []  # barras candidatas para EV/CS, Ejemplo: ["bus5", "bus9", "bus14"]
