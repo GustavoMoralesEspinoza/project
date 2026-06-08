@@ -6,8 +6,8 @@ import os
 
 # --- Módulos activos ---
 ENABLE_PV    = True
-ENABLE_BESS  = False
-ENABLE_EV_CS = True
+ENABLE_BESS  = True
+ENABLE_EV_CS = False
 
 # --- Red a usar ---
 NETWORK_NAME    = "18Bus"       # nombre de subcarpeta en data/networks/
@@ -22,7 +22,6 @@ IRRADIANCE_FILE  = os.path.join(BASE_DIR, "data", "irradiance", "Geracao_Solar.c
 BESS_PROFILES_DIR = os.path.join(BASE_DIR, "data", "bess_profiles")
 EV_PROFILES_DIR   = os.path.join(BASE_DIR, "data", "ev_profiles")
 RESULTS_DIR      = os.path.join(BASE_DIR, "results")
-RESULTS_FILE     = os.path.join(RESULTS_DIR, f"resultados_{NETWORK_NAME}.csv")
 
 # --- Monte Carlo ---
 NUM_ITERATIONS   = 10          # iteraciones por nivel de penetración
@@ -40,6 +39,11 @@ PENETRATION_LEVELS_PV = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 #   BESS_PV_RATIO = 0.25 →  ratio 1:4  (BESS =  25% de la penetración PV)
 BESS_PV_RATIO = 0.5     # penetración BESS = pen_pv * BESS_PV_RATIO
 EV_PV_RATIO   = 0.25    # penetración EV   = pen_pv * EV_PV_RATIO
+
+_max_pv   = max(PENETRATION_LEVELS_PV) if ENABLE_PV   else 0
+_max_bess = round(_max_pv * BESS_PV_RATIO) if ENABLE_BESS  else 0
+_max_ev   = round(_max_pv * EV_PV_RATIO)   if ENABLE_EV_CS else 0
+RESULTS_FILE = os.path.join(RESULTS_DIR, f"resultados_{NETWORK_NAME}_PV{_max_pv}_BESS{_max_bess}_EV{_max_ev}.csv")
 
 # --- PV ---
 PV_SIZES_KW     = [300, 600, 1200, 1800, 2400]   # tamaños discretos [kW]

@@ -93,6 +93,8 @@ def run_base_case(dss_file, transformer_mva, only_three_phase=True):
         "mt_buses":         mt_buses,
         "mt_kv":            mt_kv,
         "mt_phases":        mt_phases,
+
+        # KPIs utilizados en general para evaluar cada iteración del Monte Carlo
         "perfil_vmin":      perfil_vmin,
         "perfil_vmax":      perfil_vmax,
         "perfil_pactiva":   perfil_pactiva,

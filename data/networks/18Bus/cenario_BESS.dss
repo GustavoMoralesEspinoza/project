@@ -1,0 +1,32 @@
+! ==============================================
+! cenario_BESS.dss — generado automaticamente
+! Penetracion BESS: 10%
+! ==============================================
+
+New Loadshape.CurvaBat_Bat_0 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.40000 -0.70000 -1.00000 -0.70000 -0.40000 0.00000 0.00000 0.00000 0.40000 0.70000 1.00000 0.70000 0.40000 0.00000 0.00000]
+New Loadshape.CurvaBat_Bat_1 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.20000 -0.50000 -0.80000 -1.00000 -0.80000 -0.50000 0.00000 0.00000 0.00000 0.20000 0.50000 0.80000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_2 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.20000 -0.50000 -0.80000 -1.00000 -0.80000 -0.50000 0.00000 0.00000 0.00000 0.20000 0.50000 0.80000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_3 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.20000 -0.50000 -0.80000 -1.00000 -0.80000 -0.50000 0.00000 0.00000 0.00000 0.20000 0.50000 0.80000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_4 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.80000 -1.00000 -1.00000 -0.80000 0.00000 0.00000 0.00000 0.00000 0.80000 1.00000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_5 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.40000 -0.70000 -1.00000 -0.70000 -0.40000 0.00000 0.00000 0.00000 0.40000 0.70000 1.00000 0.70000 0.40000 0.00000 0.00000]
+New Loadshape.CurvaBat_Bat_6 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.20000 -0.50000 -0.80000 -1.00000 -0.80000 -0.50000 0.00000 0.00000 0.00000 0.20000 0.50000 0.80000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_7 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.80000 -1.00000 -1.00000 -0.80000 0.00000 0.00000 0.00000 0.00000 0.80000 1.00000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_8 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.40000 -0.70000 -1.00000 -0.70000 -0.40000 0.00000 0.00000 0.00000 0.40000 0.70000 1.00000 0.70000 0.40000 0.00000 0.00000]
+New Loadshape.CurvaBat_Bat_9 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.40000 -0.70000 -1.00000 -0.70000 -0.40000 0.00000 0.00000 0.00000 0.40000 0.70000 1.00000 0.70000 0.40000 0.00000 0.00000]
+New Loadshape.CurvaBat_Bat_10 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.80000 -1.00000 -1.00000 -0.80000 0.00000 0.00000 0.00000 0.00000 0.80000 1.00000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_11 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.20000 -0.50000 -0.80000 -1.00000 -0.80000 -0.50000 0.00000 0.00000 0.00000 0.20000 0.50000 0.80000 1.00000 1.00000 0.80000 0.00000]
+New Loadshape.CurvaBat_Bat_12 npts=24 interval=1 mult=[0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.20000 -0.50000 -0.80000 -1.00000 -0.80000 -0.50000 0.00000 0.00000 0.00000 0.20000 0.50000 0.80000 1.00000 1.00000 0.80000 0.00000]
+
+New Storage.Bat_0 bus1=b3 phases=3 kv=13.800 kWrated=1200.00 kWhRated=4800.00 %stored=20 state=idling daily=CurvaBat_Bat_0 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_1 bus1=b2 phases=3 kv=13.800 kWrated=300.00 kWhRated=1200.00 %stored=20 state=idling daily=CurvaBat_Bat_1 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_2 bus1=b3 phases=3 kv=13.800 kWrated=1800.00 kWhRated=7200.00 %stored=20 state=idling daily=CurvaBat_Bat_2 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_3 bus1=b2 phases=3 kv=13.800 kWrated=600.00 kWhRated=2400.00 %stored=20 state=idling daily=CurvaBat_Bat_3 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_4 bus1=b7 phases=3 kv=13.800 kWrated=1200.00 kWhRated=4800.00 %stored=20 state=idling daily=CurvaBat_Bat_4 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_5 bus1=b3 phases=3 kv=13.800 kWrated=1200.00 kWhRated=4800.00 %stored=20 state=idling daily=CurvaBat_Bat_5 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_6 bus1=b6 phases=3 kv=13.800 kWrated=600.00 kWhRated=2400.00 %stored=20 state=idling daily=CurvaBat_Bat_6 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_7 bus1=b14 phases=3 kv=13.800 kWrated=1800.00 kWhRated=7200.00 %stored=20 state=idling daily=CurvaBat_Bat_7 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_8 bus1=b3 phases=3 kv=13.800 kWrated=1200.00 kWhRated=4800.00 %stored=20 state=idling daily=CurvaBat_Bat_8 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_9 bus1=b1 phases=3 kv=13.800 kWrated=1200.00 kWhRated=4800.00 %stored=20 state=idling daily=CurvaBat_Bat_9 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_10 bus1=b2 phases=3 kv=13.800 kWrated=1200.00 kWhRated=4800.00 %stored=20 state=idling daily=CurvaBat_Bat_10 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_11 bus1=b10 phases=3 kv=13.800 kWrated=600.00 kWhRated=2400.00 %stored=20 state=idling daily=CurvaBat_Bat_11 dispmode=follow %EffCharge=95 %EffDischarge=95
+New Storage.Bat_12 bus1=b8 phases=3 kv=13.800 kWrated=300.00 kWhRated=1200.00 %stored=20 state=idling daily=CurvaBat_Bat_12 dispmode=follow %EffCharge=95 %EffDischarge=95

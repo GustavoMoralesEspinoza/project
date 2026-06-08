@@ -202,7 +202,7 @@ fake_sim = {
 }
 pen_bess_csv = round(50 * config.BESS_PV_RATIO, 4)
 pen_ev_csv   = round(50 * config.EV_PV_RATIO,   4)
-append_row(tmp_csv, 50, pen_bess_csv, pen_ev_csv, fake_sim)
+append_row(tmp_csv, 50, pen_bess_csv, pen_ev_csv, fake_sim, seed_it=26)
 
 with open(tmp_csv, newline="") as f:
     rows = list(csv.DictReader(f))
@@ -213,7 +213,7 @@ expected_cols = [
     "Pen_PV", "Pen_BESS", "Pen_EV",
     "B_Vmin", "B_Vmax", "B_VminVmax",
     "Max_PLosses", "Min_PLosses", "Energy_Losses",
-    "Min_Fluxo_Subestacao", "Trafo_Loading_pct",
+    "Min_Fluxo_Subestacao", "Trafo_Loading_pct", "Seed",
 ]
 for col in expected_cols:
     assert col in rows[0], f"ERROR: falta columna '{col}'"

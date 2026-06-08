@@ -14,6 +14,7 @@ COLUMNS = [
     "Max_PLosses", "Min_PLosses", "Energy_Losses",
     "Min_Fluxo_Subestacao",
     "Trafo_Loading_pct",
+    "Seed",
 ]
 
 
@@ -29,7 +30,7 @@ def init_csv(filepath):
         writer.writeheader()
 
 
-def append_row(filepath, pen_pv, pen_bess, pen_ev, sim_results):
+def append_row(filepath, pen_pv, pen_bess, pen_ev, sim_results, seed_it):
     """
     Agrega una fila al CSV de resultados.
 
@@ -40,6 +41,7 @@ def append_row(filepath, pen_pv, pen_bess, pen_ev, sim_results):
     pen_bess     : float — penetración BESS usada en esta iteración
     pen_ev       : float — penetración EV usada en esta iteración
     sim_results  : dict  — resultado de core.network.run_with_ders()
+    seed_it      : int   — semilla usada en esta iteración
 
     Contadores de tensión (barras únicas afectadas en al menos 1h de las 24h):
         B_Vmin    : barras con subtensión  (<0.95 pu) en al menos 1 hora
@@ -65,6 +67,7 @@ def append_row(filepath, pen_pv, pen_bess, pen_ev, sim_results):
         "Energy_Losses":        round(float(np.sum(sim_results["perfil_losses"])), 4),
         "Min_Fluxo_Subestacao": round(float(sim_results["fluxo_min"]),             4),
         "Trafo_Loading_pct":    round(float(np.max(sim_results["perfil_trafo"])),   4),
+        "Seed":                 seed_it,
     }
 
     with open(filepath, "a", newline="", encoding="utf-8") as f:

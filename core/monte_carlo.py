@@ -75,6 +75,8 @@ def run_monte_carlo(cfg):
                 seed_it = cfg.RANDOM_SEED + count
                 random.seed(seed_it)
                 np.random.seed(seed_it)
+            else:
+                seed_it = 0
 
             # --- Caso base (sin DERs) ---
             base = run_base_case(
@@ -141,6 +143,6 @@ def run_monte_carlo(cfg):
             )
 
             # --- Guardar fila en CSV ---
-            append_row(cfg.RESULTS_FILE, pen_pv, pen_bess, pen_ev, sim)
+            append_row(cfg.RESULTS_FILE, pen_pv, pen_bess, pen_ev, sim, seed_it)
 
     print(f"\nSimulacion completa. Resultados en: {cfg.RESULTS_FILE}")
