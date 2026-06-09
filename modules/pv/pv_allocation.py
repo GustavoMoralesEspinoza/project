@@ -113,6 +113,7 @@ def generate_cenario_pv(units, irrad_pu, temp_c, output_path, penetration_pct, m
                 f"Bus1={u['bus']} "
                 f"Pmpp={u['pmpp_kw']:.2f} "
                 f"kV={u['kv_ll']:.3f} "
+                #f"kV={13.8/(3**(1/2))} "
                 f"kVA={u['kva']:.2f} "
                 f"effcurve=Eff P-TCurve=FatorPvsT "
                 f"daily=Irrad Tdaily=Temp "

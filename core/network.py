@@ -146,6 +146,7 @@ def run_with_ders(dss_file, transformer_mva,
 
     buses_vmin = set()
     buses_vmax = set()
+    tension_barras = {}   # {bus_name: {hour: avg_v_pu}}
 
     for hour in range(24):
         dss.text("Set mode=daily")
@@ -169,16 +170,39 @@ def run_with_ders(dss_file, transformer_mva,
         s_kva = (p_act**2 + p_reac**2) ** 0.5
         perfil_trafo.append(100.0 * s_kva / kva_base)
 
+        # Tensión promedio por barra en esta hora
+        for bus in dss.circuit.buses_names:
+            bus_clean = _clean_bus_name(bus)
+            if not bus_clean:
+                continue
+            dss.circuit.set_active_bus(bus_clean)
+            base_v = dss.bus.kv_base * 1000.0
+            if base_v <= 0:
+                continue
+            voltages_v = dss.bus.vmag_angle[::2]
+            v_pu = [v / base_v for v in voltages_v if v / base_v > 0.05]
+            if v_pu:
+                if bus_clean not in tension_barras:
+                    tension_barras[bus_clean] = {}
+                tension_barras[bus_clean][hour] = float(np.mean(v_pu))
+
+    perfil_tension_barras = {
+        bus: [tension_barras[bus].get(h, None) for h in range(24)]
+        for bus in tension_barras
+        if sum(1 for v in tension_barras[bus].values() if v is not None) == 24
+    }
+
     return {
-        "perfil_vmin":      perfil_vmin,
-        "perfil_vmax":      perfil_vmax,
-        "perfil_pactiva":   perfil_pactiva,
-        "perfil_preactiva": perfil_preactiva,
-        "perfil_losses":    perfil_losses,
-        "perfil_trafo":     perfil_trafo,
-        "buses_vmin":       buses_vmin,
-        "buses_vmax":       buses_vmax,
-        "fluxo_min":        float(np.min(perfil_pactiva)),
+        "perfil_vmin":           perfil_vmin,
+        "perfil_vmax":           perfil_vmax,
+        "perfil_pactiva":        perfil_pactiva,
+        "perfil_preactiva":      perfil_preactiva,
+        "perfil_losses":         perfil_losses,
+        "perfil_trafo":          perfil_trafo,
+        "buses_vmin":            buses_vmin,
+        "buses_vmax":            buses_vmax,
+        "fluxo_min":             float(np.min(perfil_pactiva)),
+        "perfil_tension_barras": perfil_tension_barras,
     }
 
 # ---------------------------------------------------------------------------

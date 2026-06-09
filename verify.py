@@ -11,10 +11,10 @@ Ejecutar con:
 # ============================================================
 # PARÁMETROS EDITABLES
 # ============================================================
-PEN_PV   = 20    # penetración PV   [%]
-PEN_BESS = 10    # penetración BESS [%]
+PEN_PV   = 70    # penetración PV   [%]
+PEN_BESS = 70    # penetración BESS [%]
 PEN_EV   = 0     # penetración EV   [%]
-SEED     = 55    # semilla
+SEED     = 98    # semilla
 # ============================================================
 
 import os
@@ -177,9 +177,9 @@ print(SEP)
 # 9. Gráfico de tensión
 from plot_voltage import plot_voltage_profile
 
-figures_dir = os.path.join(cfg.RESULTS_DIR, "figures")
 plot_voltage_profile(
-    sim["perfil_vmin"], sim["perfil_vmax"],
+    sim["perfil_tension_barras"],
     PEN_PV, PEN_BESS, PEN_EV, SEED,
-    figures_dir, cfg.NETWORK_NAME,
+    os.path.join(cfg.RESULTS_DIR, "figures"),
+    cfg.NETWORK_NAME,
 )
