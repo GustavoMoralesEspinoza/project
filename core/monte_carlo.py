@@ -83,11 +83,13 @@ def run_monte_carlo(cfg):
                 cfg.NETWORK_DSS_PATH,
                 cfg.TRANSFORMER_MVA,
                 cfg.ONLY_THREE_PHASE,
+                excluded_buses=cfg.EXCLUDED_BUSES,
             )
-            mt_buses  = base["mt_buses"]
-            mt_kv     = base["mt_kv"]
-            mt_phases = base["mt_phases"]
-            energy    = base["energy_kwh"]
+            mt_buses   = base["mt_buses"]
+            mt_kv      = base["mt_kv"]
+            mt_phases  = base["mt_phases"]
+            energy     = base["energy_kwh"]
+            n_mt_total = base["n_mt_total"]
 
             # --- PV ---
             pv_units = []
@@ -140,6 +142,7 @@ def run_monte_carlo(cfg):
                 enable_pv=cfg.ENABLE_PV,    path_pv=path_pv,
                 enable_bess=cfg.ENABLE_BESS, path_bess=path_bess,
                 enable_ev=cfg.ENABLE_EV_CS,  path_ev=path_ev,
+                n_mt_total=n_mt_total,
             )
 
             # --- Guardar fila en CSV ---

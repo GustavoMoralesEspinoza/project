@@ -14,6 +14,8 @@ COLUMNS = [
     "Max_PLosses", "Min_PLosses", "Energy_Losses",
     "Min_Fluxo_Subestacao",
     "Trafo_Loading_pct",
+    "Vmin_24h", "Vmax_24h",
+    "Sev_Vmin_pct", "Sev_Vmax_pct", "Sev_VminVmax_pct",
     "Seed",
 ]
 
@@ -67,6 +69,11 @@ def append_row(filepath, pen_pv, pen_bess, pen_ev, sim_results, seed_it):
         "Energy_Losses":        round(float(np.sum(sim_results["perfil_losses"])), 4),
         "Min_Fluxo_Subestacao": round(float(sim_results["fluxo_min"]),             4),
         "Trafo_Loading_pct":    round(float(np.max(sim_results["perfil_trafo"])),   4),
+        "Vmin_24h":             round(float(sim_results["vmin_24h"]),              4),
+        "Vmax_24h":             round(float(sim_results["vmax_24h"]),              4),
+        "Sev_Vmin_pct":         round(float(sim_results["sev_vmin_pct"]),          4),
+        "Sev_Vmax_pct":         round(float(sim_results["sev_vmax_pct"]),          4),
+        "Sev_VminVmax_pct":     round(float(sim_results["sev_union_pct"]),         4),
         "Seed":                 seed_it,
     }
 

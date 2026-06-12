@@ -8,7 +8,7 @@ import numpy as np
 import py_dss_interface
 
 
-def run_base_case(dss_file, transformer_mva, only_three_phase=True):
+def run_base_case(dss_file, transformer_mva, only_three_phase=True, excluded_buses=None):
     """
     Compila la red y corre simulación diaria de 24 horas sin DERs.
 
@@ -40,12 +40,14 @@ def run_base_case(dss_file, transformer_mva, only_three_phase=True):
     dss.text(f"compile [{dss_file}]")
 
     # --- Identificar barras MT candidatas ---
-    mt_buses, mt_kv, mt_phases = _get_mt_buses(dss, only_three_phase)
+    mt_buses, mt_kv, mt_phases = _get_mt_buses(dss, only_three_phase, excluded_buses)
     if len(mt_buses) == 0:
         raise ValueError(
             "No se encontraron barras MT candidatas. "
             "Revise los límites de tensión o el archivo de red."
         )
+    all_mt_buses, _, _ = _get_mt_buses(dss, only_three_phase, excluded_buses=None)
+    n_mt_total = len(all_mt_buses)
 
     # --- Correr 24 horas ---
     kva_base = transformer_mva * 1000.0
@@ -64,7 +66,7 @@ def run_base_case(dss_file, transformer_mva, only_three_phase=True):
         dss.text("Solve")
 
         # Tensiones — acumula barras afectadas en los sets
-        vmin, vmax, buses_bajo, buses_alto = _get_voltage_stats(dss)
+        vmin, vmax, buses_bajo, buses_alto, _, _ = _get_voltage_stats(dss)
         perfil_vmin.append(vmin)
         perfil_vmax.append(vmax)
         buses_vmin.update(buses_bajo)
@@ -105,13 +107,15 @@ def run_base_case(dss_file, transformer_mva, only_three_phase=True):
         "buses_vmin":       buses_vmin,   # set de nombres de barra
         "buses_vmax":       buses_vmax,   # set de nombres de barra
         "fluxo_min":        fluxo_min,
+        "n_mt_total":       n_mt_total,
     }
 
 
 def run_with_ders(dss_file, transformer_mva,
                   enable_pv=False, path_pv=None,
                   enable_bess=False, path_bess=None,
-                  enable_ev=False, path_ev=None):
+                  enable_ev=False, path_ev=None,
+                  n_mt_total=1):
     """
     Compila la red y carga los DERs activos con redirect explícito.
     Solo hace redirect a los archivos de los módulos habilitados.
@@ -147,17 +151,23 @@ def run_with_ders(dss_file, transformer_mva,
     buses_vmin = set()
     buses_vmax = set()
     tension_barras = {}   # {bus_name: {hour: avg_v_pu}}
+    acum_bajo  = 0
+    acum_alto  = 0
+    acum_union = 0
 
     for hour in range(24):
         dss.text("Set mode=daily")
         dss.text(f"Set number={hour + 1}")
         dss.text("Solve")
 
-        vmin, vmax, buses_bajo, buses_alto = _get_voltage_stats(dss)
+        vmin, vmax, buses_bajo, buses_alto, n_bajo_hora, n_alto_hora = _get_voltage_stats(dss)
         perfil_vmin.append(vmin)
         perfil_vmax.append(vmax)
         buses_vmin.update(buses_bajo)
         buses_vmax.update(buses_alto)
+        acum_bajo  += n_bajo_hora
+        acum_alto  += n_alto_hora
+        acum_union += len(buses_bajo | buses_alto)
 
         p_act  = -(dss.circuit._total_power()[0])
         p_reac = abs(dss.circuit._total_power()[1])
@@ -192,6 +202,11 @@ def run_with_ders(dss_file, transformer_mva,
         if sum(1 for v in tension_barras[bus].values() if v is not None) == 24
     }
 
+    denom = n_mt_total * 24
+    sev_vmin_pct  = round(100.0 * acum_bajo  / denom, 4) if denom > 0 else 0.0
+    sev_vmax_pct  = round(100.0 * acum_alto  / denom, 4) if denom > 0 else 0.0
+    sev_union_pct = round(100.0 * acum_union / denom, 4) if denom > 0 else 0.0
+
     return {
         "perfil_vmin":           perfil_vmin,
         "perfil_vmax":           perfil_vmax,
@@ -203,6 +218,11 @@ def run_with_ders(dss_file, transformer_mva,
         "buses_vmax":            buses_vmax,
         "fluxo_min":             float(np.min(perfil_pactiva)),
         "perfil_tension_barras": perfil_tension_barras,
+        "sev_vmin_pct":          sev_vmin_pct,
+        "sev_vmax_pct":          sev_vmax_pct,
+        "sev_union_pct":         sev_union_pct,
+        "vmin_24h":              float(np.min(perfil_vmin)),
+        "vmax_24h":              float(np.max(perfil_vmax)),
     }
 
 # ---------------------------------------------------------------------------
@@ -223,12 +243,14 @@ def _clean_bus_name(bus):
     return name.encode("ascii", errors="ignore").decode("ascii")
 
 
-def _get_mt_buses(dss, only_three_phase):
+def _get_mt_buses(dss, only_three_phase, excluded_buses=None):
     """Retorna listas paralelas: nombres, kV base y número de fases de barras MT."""
     buses, kvs, phases = [], [], []
     for bus in dss.circuit.buses_names:
         bus_clean = _clean_bus_name(bus)
         if not bus_clean:
+            continue
+        if excluded_buses and bus_clean in excluded_buses:
             continue
         dss.circuit.set_active_bus(bus_clean)
         kv_base   = dss.bus.kv_base
@@ -284,4 +306,4 @@ def _get_voltage_stats(dss):
     vmin = float(np.min(all_v)) if all_v else 1.0
     vmax = float(np.max(all_v)) if all_v else 1.0
 
-    return vmin, vmax, buses_bajo, buses_alto
+    return vmin, vmax, buses_bajo, buses_alto, len(buses_bajo), len(buses_alto)

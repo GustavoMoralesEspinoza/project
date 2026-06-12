@@ -28,6 +28,11 @@ NUM_ITERATIONS   = 10          # iteraciones por nivel de penetración
 RANDOM_SEED      = 100           # semilla (None = aleatorio)
 ONLY_THREE_PHASE = True         # True = solo barras trifásicas para DERs
 
+# --- Buses excluidos del sorteo de DERs ---
+# Buses que NO serán candidatos para instalar PV, BESS ni EV/CS
+# Ejemplo: el sourcebus no tiene sentido como punto de conexión
+EXCLUDED_BUSES = ["sourcebus"]
+
 # --- Niveles de penetración PV (% de energía diaria de la red) ---
 # BESS y EV/CS se calculan automáticamente con los ratios de abajo.
 PENETRATION_LEVELS_PV = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]

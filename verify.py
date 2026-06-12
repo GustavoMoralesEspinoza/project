@@ -11,10 +11,10 @@ Ejecutar con:
 # ============================================================
 # PARÁMETROS EDITABLES
 # ============================================================
-PEN_PV   = 70    # penetración PV   [%]
+PEN_PV   = 50    # penetración PV   [%]
 PEN_BESS = 0    # penetración BESS [%]
 PEN_EV   = 0     # penetración EV   [%]
-SEED     = 171    # semilla
+SEED     = 160    # semilla
 # ============================================================
 
 import os
@@ -44,11 +44,13 @@ base = run_base_case(
     cfg.NETWORK_DSS_PATH,
     cfg.TRANSFORMER_MVA,
     cfg.ONLY_THREE_PHASE,
+    excluded_buses=cfg.EXCLUDED_BUSES,
 )
-mt_buses  = base["mt_buses"]
-mt_kv     = base["mt_kv"]
-mt_phases = base["mt_phases"]
-energy    = base["energy_kwh"]
+mt_buses   = base["mt_buses"]
+mt_kv      = base["mt_kv"]
+mt_phases  = base["mt_phases"]
+energy     = base["energy_kwh"]
+n_mt_total = base["n_mt_total"]
 
 # 4. PV
 pv_units   = []
@@ -116,6 +118,7 @@ sim = run_with_ders(
     enable_pv=cfg.ENABLE_PV,    path_pv=path_pv,
     enable_bess=cfg.ENABLE_BESS, path_bess=path_bess,
     enable_ev=cfg.ENABLE_EV_CS,  path_ev=path_ev,
+    n_mt_total=n_mt_total,
 )
 
 # 8. Reporte en consola
@@ -166,6 +169,11 @@ print(f"   B_VminVmax            : {b_vminvmax}  barras afectadas (unión)")
 print(f"   Max pérdidas activas  : {max_losses:,.1f} kW")
 print(f"   Energía pérdidas      : {energy_losses:,.1f} kWh")
 print(f"   Cargamento trafo máx  : {trafo_max:.1f} %")
+print(f"   Vmin 24h              : {sim['vmin_24h']:.3f} pu")
+print(f"   Vmax 24h              : {sim['vmax_24h']:.3f} pu")
+print(f"   Sev. subtensión       : {sim['sev_vmin_pct']:.2f} %")
+print(f"   Sev. sobretensión     : {sim['sev_vmax_pct']:.2f} %")
+print(f"   Sev. combinada        : {sim['sev_union_pct']:.2f} %")
 print()
 
 print(" Archivos DSS generados en:")
@@ -175,7 +183,7 @@ print(f"   {rel_ev}")
 print(SEP)
 
 # 9. Gráfico de tensión
-from plot_voltage import plot_voltage_profile
+from plots.plot_voltage import plot_voltage_profile
 
 plot_voltage_profile(
     sim["perfil_tension_barras"],
@@ -185,7 +193,7 @@ plot_voltage_profile(
 )
 
 # 10. Gráficos de sistema (flujo, transformador, pérdidas)
-from plot_system import plot_system_profile
+from plots.plot_system import plot_system_profile
 
 plot_system_profile(
     sim,
