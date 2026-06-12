@@ -6,8 +6,8 @@ import os
 
 # --- Módulos activos ---
 ENABLE_PV    = True
-ENABLE_BESS  = True
-ENABLE_EV_CS = True
+ENABLE_BESS  = False
+ENABLE_EV_CS = False
 
 # --- Red a usar ---
 NETWORK_NAME    = "18Bus"       # nombre de subcarpeta en data/networks/
@@ -24,8 +24,8 @@ EV_PROFILES_DIR   = os.path.join(BASE_DIR, "data", "ev_profiles")
 RESULTS_DIR      = os.path.join(BASE_DIR, "results")
 
 # --- Monte Carlo ---
-NUM_ITERATIONS   = 20          # iteraciones por nivel de penetración
-RANDOM_SEED      = 1000           # semilla (None = aleatorio)
+NUM_ITERATIONS   = 10          # iteraciones por nivel de penetración
+RANDOM_SEED      = 100           # semilla (None = aleatorio)
 ONLY_THREE_PHASE = True         # True = solo barras trifásicas para DERs
 
 # --- Niveles de penetración PV (% de energía diaria de la red) ---

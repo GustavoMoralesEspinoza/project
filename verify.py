@@ -12,9 +12,9 @@ Ejecutar con:
 # PARÁMETROS EDITABLES
 # ============================================================
 PEN_PV   = 70    # penetración PV   [%]
-PEN_BESS = 70    # penetración BESS [%]
+PEN_BESS = 0    # penetración BESS [%]
 PEN_EV   = 0     # penetración EV   [%]
-SEED     = 98    # semilla
+SEED     = 171    # semilla
 # ============================================================
 
 import os
@@ -179,6 +179,17 @@ from plot_voltage import plot_voltage_profile
 
 plot_voltage_profile(
     sim["perfil_tension_barras"],
+    PEN_PV, PEN_BESS, PEN_EV, SEED,
+    os.path.join(cfg.RESULTS_DIR, "figures"),
+    cfg.NETWORK_NAME,
+)
+
+# 10. Gráficos de sistema (flujo, transformador, pérdidas)
+from plot_system import plot_system_profile
+
+plot_system_profile(
+    sim,
+    cfg.TRANSFORMER_MVA,
     PEN_PV, PEN_BESS, PEN_EV, SEED,
     os.path.join(cfg.RESULTS_DIR, "figures"),
     cfg.NETWORK_NAME,

@@ -71,7 +71,7 @@ def run_base_case(dss_file, transformer_mva, only_three_phase=True):
         buses_vmax.update(buses_alto)
 
         # Potencia y pérdidas
-        p_act  = abs(dss.circuit._total_power()[0])
+        p_act  = -(dss.circuit._total_power()[0])
         p_reac = abs(dss.circuit._total_power()[1])
         losses = abs(dss.circuit._losses()[0]) / 1000.0
 
@@ -159,7 +159,7 @@ def run_with_ders(dss_file, transformer_mva,
         buses_vmin.update(buses_bajo)
         buses_vmax.update(buses_alto)
 
-        p_act  = abs(dss.circuit._total_power()[0])
+        p_act  = -(dss.circuit._total_power()[0])
         p_reac = abs(dss.circuit._total_power()[1])
         losses = abs(dss.circuit._losses()[0]) / 1000.0
 
@@ -283,4 +283,5 @@ def _get_voltage_stats(dss):
 
     vmin = float(np.min(all_v)) if all_v else 1.0
     vmax = float(np.max(all_v)) if all_v else 1.0
+
     return vmin, vmax, buses_bajo, buses_alto
